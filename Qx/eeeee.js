@@ -454,10 +454,10 @@ try {
       
       Noosuture.body = JSON.stringify(Noosuturee);
       
-      console.log(`\n「Nnn」成了成了 \n「Nnn」匹配对象: \n ${matchTarget}\n`);
+      console.log(`\n「Noosuture」成了成了🀄 匹配对象: \n ${matchTarget}\n`);
     } 
   } catch(e) {
-    console.log(`\n「Nnn」不中不中 \n「Nnn」匹配对象: ${matchTarget}\n「Nnn」错误输出:`+e.message);
+    console.log(`\n「Noosuturee」不中不中🈲 匹配对象: \n ${matchTarget}\n错误输出:`+e.message);
   }
 
 $done(Noosuture);
