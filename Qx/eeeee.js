@@ -3,8 +3,8 @@ Update date：2024-03-17
 **************************************
 
 [rewrite_local]
-^https:\/\/api\.(revenuecat|rc-backup)\.com\/.+\/(receipts$|subscribers\/?(.*?)*$) url script-response-body
-^https:\/\/api\.(revenuecat|rc-backup)\.com\/.+\/(receipts$|subscribers\/?(.*?)*$) url script-request-header
+^https:\/\/api\.(revenuecat|rc-backup)\.com\/.+\/(receipts$|subscribers\/?(.*?)*$) url script-response-body https://raw.githubusercontent.com/noosuture/mimo/main/Qx/eeeee.js
+^https:\/\/api\.(revenuecat|rc-backup)\.com\/.+\/(receipts$|subscribers\/?(.*?)*$) url script-request-header https://raw.githubusercontent.com/noosuture/mimo/main/Qx/eeeee.js
 ^https?:\/\/app-measurement\.com\/config\/app url reject
 ^https?:\/\/firestore\.googleapis\.com url reject
 
