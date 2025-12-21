@@ -457,7 +457,7 @@ try {
       console.log(`\n「Noosuture」成了成了🀄 匹配对象: \n ${matchTarget}\n`);
     } 
   } catch(e) {
-    console.log(`\n「Noosuturee」不中不中🈲 匹配对象: \n ${matchTarget}\n错误输出:`+e.message);
+    console.log(`\n「Noosuturee」不中不中❓️ 匹配对象: \n ${matchTarget}\n 错误输出:`+ e.message);
   }
 
 $done(Noosuture);
