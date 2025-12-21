@@ -1,5 +1,6 @@
 /*************************************
-Update date：2024-03-17
+Version：1.01
+Update date：2025-12-21
 **************************************
 
 [rewrite_local]
@@ -453,10 +454,10 @@ try {
       
       Noosuture.body = JSON.stringify(Noosuturee);
       
-      console.log(`「Nnn」成了成了 \n「Nnn」匹配对象: ${matchTarget}\n`);
+      console.log(`\n「Nnn」成了成了 \n「Nnn」匹配对象: \n ${matchTarget}\n`);
     } 
   } catch(e) {
-    console.log(`「Nnn」不中不中 \n「Nnn」匹配对象: ${matchTarget}\n「Nnn」错误输出:`+e.message);
+    console.log(`\n「Nnn」不中不中 \n「Nnn」匹配对象: ${matchTarget}\n「Nnn」错误输出:`+e.message);
   }
 
 $done(Noosuture);
