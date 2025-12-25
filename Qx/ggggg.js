@@ -4,7 +4,7 @@ Update date：2025-12-25
 Project: EasyGTO
 
 [rewrite_local]
-^https:\/\/applet\.easygto\.cn\/(GTO\/validateGtoResource|user\/getUserInfo) url script-response-body https://raw.githubusercontent.com/yourname/script/main/easygto.js
+^https:\/\/applet\.easygto\.cn\/(GTO\/validateGtoResource|user\/getUserInfo) url script-response-body https://raw.githubusercontent.com/noosuture/mimo/main/Qx/ggggg.js
 
 [mitm]
 hostname = applet.easygto.cn
