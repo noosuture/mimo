@@ -1,6 +1,7 @@
 /*************************************
 Version：1.01
 Update date：2025-12-21
+https://raw.githubusercontent.com/chxm1023/Rewrite/main/Reheji.js
 **************************************
 
 [rewrite_local]
@@ -55,6 +56,7 @@ const bundle = {
 };
 
 const list = {
+  'Offsuit': { name: 'premium', id: 'com.offsuit.offline_sub_year_3599', cm: 'sjc' },  //甲壳虫ADB
   'BeetleADB': { name: 'beetle_pro', id: 'beetle_lifetime_pro', cm: 'sjc' },  //甲壳虫ADB
   'adbTools': { name: 'pro_lifetime', id: 'com.jy.adbTools.pro_1', cm: 'sjb' },  //adbTools
   'Habitor': { name: 'premium', id: 'habitor_lifetime', cm: 'sjb' },  //Habitor
