@@ -11,64 +11,74 @@ hostname = api.testnet.euphoria.finance
 
 const Euphoria = {};
 const bodyStr = typeof $response != "undefined" && $response.body || null;
-const url = $request.url;
 
 try {
     if (bodyStr) {
         let jsonObj = JSON.parse(bodyStr);
         let isModified = false;
 
-        // 定义修改逻辑：寻找用户数据并注入权限
-        const injectEarlyAccess = (jsonNode) => {
-            // 判断特征：必须包含 roles 字段 (哪怕是空数组)，或者包含 username/id
-            if (jsonNode && (jsonNode.roles !== undefined || jsonNode.username || jsonNode.privyUserId)) {
-                
-                // 核心修改：源码逻辑要求必须是 "EarlyAccess"
-                jsonNode.roles = ["EarlyAccess"]; 
-                
-                // 额外修改：改个积分玩玩
-                if (jsonNode.credits) {
-                    jsonNode.credits.amount = 999999;
-                }
-                // 修改排名百分比 (越小越好)
-                if (jsonNode.percentile) {
-                    jsonNode.percentile = 0.01;
-                }
-                
-                return true;
+        // --- 通用处理函数 ---
+        const processNode = (jsonNode) => {
+            let modified = false;
+
+            // 1. 功能模块：权限解锁 (针对 users.getProfile)
+            // 特征：包含 roles 字段
+            if (jsonNode && (jsonNode.roles !== undefined || jsonNode.privyUserId)) {
+                // 强制注入 EarlyAccess
+                jsonNode.roles = ["EarlyAccess"];
+                // 顺手改大积分
+                if (jsonNode.credits) jsonNode.credits.amount = 999999;
+                if (jsonNode.percentile) jsonNode.percentile = 0.01;
+                modified = true;
             }
-            return false;
+
+            // 2. 功能模块：交易余额修改 (针对 trades.execute)
+            // 特征：包含 remainingBalance 字段
+            if (jsonNode && jsonNode.remainingBalance !== undefined) {
+                // 修改显示余额
+                jsonNode.remainingBalance = 999999999999999999;
+                // 修改 Wei 单位余额 (防止前端计算不一致)
+                if (jsonNode.remainingBalanceWei) {
+                    jsonNode.remainingBalanceWei = "999999999999999999000000000000000000";
+                }
+                // 确保交易标记为成功
+                jsonNode.success = true;
+                jsonNode.rejected = false;
+                
+                modified = true;
+                console.log(`   └─ 💰 余额已修改为无限`);
+            }
+
+            return modified;
         };
 
-        // 处理 TRPC 的两种响应格式
+        // --- 遍历逻辑 (支持 Batch 和 Single) ---
         if (Array.isArray(jsonObj)) {
-            // 1. 批量响应模式 (Batch Mode) - 对应 URL 中的 batch=1
-            console.log(`\n「Euphoria」检测到批量响应 (Batch Response)`);
+            // 批量响应模式
             jsonObj.forEach((item, index) => {
                 if (item.result && item.result.data && item.result.data.json) {
-                    if (injectEarlyAccess(item.result.data.json)) {
+                    if (processNode(item.result.data.json)) {
                         isModified = true;
-                        console.log(`   └─ 成功修改第 ${index} 个数据块 (用户信息)`);
                     }
                 }
             });
         } else if (jsonObj.result && jsonObj.result.data && jsonObj.result.data.json) {
-            // 2. 单一响应模式 (Single Mode)
-            console.log(`\n「Euphoria」检测到单一响应 (Single Response)`);
-            if (injectEarlyAccess(jsonObj.result.data.json)) {
+            // 单一响应模式
+            if (processNode(jsonObj.result.data.json)) {
                 isModified = true;
             }
         }
 
         if (isModified) {
             Euphoria.body = JSON.stringify(jsonObj);
-            console.log(`\n「Euphoria」成了成了🀄 权限(EarlyAccess)注入成功\n`);
+            console.log(`\n「Euphoria」成了成了🀄 数据修改成功 (权限/余额)\n`);
         } else {
-            console.log(`\n「Euphoria」未找到用户信息节点，跳过修改\n`);
+            // console.log(`\n「Euphoria」无需修改\n`);
         }
     }
 } catch (e) {
     console.log(`\n「Euphoria」不中不中❓️ 脚本错误: ${e.message}\n`);
 }
 
+$done(Euphoria);
 $done(Euphoria);
